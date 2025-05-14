@@ -192,20 +192,16 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // DOM elements
         const todoInput = document.getElementById("todo-input");
         const addButton = document.getElementById("add-button");
         const todoList = document.querySelector(".todo-list");
 
-        // Load todos from localStorage
         let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
-        // Function to update localStorage
         const updateStorage = () => {
           localStorage.setItem("todos", JSON.stringify(todos));
         };
 
-        // Render todos
         const renderTodos = () => {
           todoList.innerHTML = "";
 
@@ -249,21 +245,18 @@
 
             todoList.appendChild(todoItem);
 
-            // Toggle completed state
             checkbox.addEventListener("change", () => {
               todos[index].completed = !todos[index].completed;
               updateStorage();
               renderTodos();
             });
 
-            // Edit todo
             editBtn.addEventListener("click", () => {
               const currentText = todoText.textContent;
               todoText.classList.add("editing");
               todoText.contentEditable = true;
               todoText.focus();
 
-              // Set cursor to end of text
               const range = document.createRange();
               const sel = window.getSelection();
               range.selectNodeContents(todoText);
@@ -271,7 +264,6 @@
               sel.removeAllRanges();
               sel.addRange(range);
 
-              // Save on blur or Enter key
               const saveEdit = () => {
                 todoText.contentEditable = false;
                 todoText.classList.remove("editing");
@@ -282,7 +274,6 @@
                   updateStorage();
                   renderTodos();
                 } else if (!newText) {
-                  // If empty, restore original text
                   todoText.textContent = currentText;
                 }
               };
@@ -296,7 +287,6 @@
               });
             });
 
-            // Delete todo
             deleteBtn.addEventListener("click", () => {
               todos.splice(index, 1);
               updateStorage();
@@ -305,7 +295,6 @@
           });
         };
 
-        // Add new todo
         const addTodo = () => {
           const text = todoInput.value.trim();
 
@@ -321,7 +310,6 @@
           }
         };
 
-        // Event listeners
         addButton.addEventListener("click", addTodo);
 
         todoInput.addEventListener("keydown", (e) => {
@@ -330,7 +318,6 @@
           }
         });
 
-        // Initial render
         renderTodos();
       });
     </script>
